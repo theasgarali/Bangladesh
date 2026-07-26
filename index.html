@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estate of Late Akram Ali — Digital Record Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F1E6; --paper2:#EFEADB; --ink:#26221A; --ink2:#5C5544; --rule:#C9C0A8;
+  --seal:#5F3E9E; --seal-soft:#E8E1F4;
+  --sa:#B4761F; --sa-soft:#F6DFB4;
+  --rs:#2E7D45; --rs-soft:#CBE7CE;
+  --mu:#2B5FA3; --mu-soft:#C4DCF5;
+  --miss:#B4392F; --miss-soft:#F2CFCB;
+  --unk:#C00000;
+  --card:#FBF8F0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:'Tiro Bangla',Georgia,'Noto Serif Bengali',serif;font-size:17px;line-height:1.55;
+  background-image:repeating-linear-gradient(0deg,transparent 0 34px,rgba(95,62,158,.035) 34px 35px);}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+/* ---------- masthead ---------- */
+header{border-bottom:3px double var(--ink);background:linear-gradient(180deg,#F2ECDD, var(--paper));}
+.mast{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:26px 0 14px;flex-wrap:wrap}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--seal);margin-bottom:6px}
+h1{font-size:clamp(26px,4.4vw,42px);line-height:1.12;font-weight:400}
+h1 .thin{color:var(--ink2)}
+.sub{color:var(--ink2);font-size:15px;margin-top:6px}
+.langbox{display:flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden;flex:none}
+.langbox button{font-family:inherit;font-size:15px;padding:7px 18px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.langbox button.on{background:var(--ink);color:var(--paper)}
+.langbox button:focus-visible{outline:2px solid var(--seal);outline-offset:-2px}
+/* ---------- tabs ---------- */
+nav{position:sticky;top:0;z-index:30;background:var(--paper);border-bottom:1.5px solid var(--ink)}
+.tabs{display:flex;gap:4px;overflow-x:auto;padding:10px 0 0}
+.tabs button{font-family:inherit;font-size:16px;padding:9px 18px 8px;border:1.5px solid var(--rule);border-bottom:none;
+  border-radius:10px 10px 0 0;background:var(--paper2);color:var(--ink2);cursor:pointer;white-space:nowrap}
+.tabs button.on{background:var(--card);color:var(--ink);border-color:var(--ink);position:relative;top:1.5px;font-weight:600}
+.tabs button:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+main{padding:26px 0 70px}
+section.tabpane{display:none}
+section.tabpane.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){section.tabpane.on{animation:none}}
+/* ---------- shared bits ---------- */
+h2{font-size:24px;font-weight:600;margin:8px 0 4px}
+h3{font-size:19px;font-weight:600;margin:22px 0 8px}
+p.lead{color:var(--ink2);max-width:72ch}
+.badge{display:inline-block;font-size:12.5px;padding:2px 10px;border-radius:999px;border:1px solid;vertical-align:2px}
+.b-sa{background:var(--sa-soft);border-color:var(--sa);color:#6d4712}
+.b-rs{background:var(--rs-soft);border-color:var(--rs);color:#1d5a30}
+.b-mu{background:var(--mu-soft);border-color:var(--mu);color:#1c4478}
+.b-deed{background:var(--seal-soft);border-color:var(--seal);color:#43296f}
+.unk{color:var(--unk);font-weight:600}
+.stat{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;padding:2px 10px;border-radius:6px;border:1px solid var(--rule);background:#fff}
+.s-have{background:var(--rs-soft);border-color:var(--rs)}
+.s-photo{background:var(--sa-soft);border-color:var(--sa)}
+.s-miss{background:var(--miss-soft);border-color:var(--miss)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--card);border:1.5px solid var(--rule);border-radius:8px;padding:16px 18px;position:relative}
+.card .type-tab{position:absolute;left:-1.5px;top:14px;bottom:14px;width:5px;border-radius:0 3px 3px 0}
+.t-sa{background:var(--sa)}.t-rs{background:var(--rs)}.t-mu{background:var(--mu)}.t-deed{background:var(--seal)}.t-adm{background:var(--seal)}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border:2px solid var(--seal);
+  border-radius:50%;color:var(--seal);font-size:10px;text-align:center;line-height:1.15;transform:rotate(-8deg);
+  font-family:'IBM Plex Mono',monospace;letter-spacing:.03em;background:rgba(95,62,158,.05);flex:none}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;font-size:15.5px;margin-top:8px}
+.kv dt{color:var(--ink2)}
+.kv dd{font-weight:600}
+/* ---------- plot pills ---------- */
+.pills{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 12px}
+.pills button{font-family:'IBM Plex Mono',monospace;font-size:14px;padding:7px 13px;border-radius:8px;border:1.5px solid var(--rule);
+  background:#fff;color:var(--ink);cursor:pointer;flex:none}
+.pills button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pills button:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+/* ---------- khatiyan-row plot detail (signature) ---------- */
+.krow{background:var(--card);border:2px solid var(--ink);border-radius:6px;overflow:hidden;box-shadow:4px 4px 0 rgba(38,34,26,.12)}
+.krow-head{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--paper2);
+  border-bottom:1.5px solid var(--ink);padding:10px 16px;flex-wrap:wrap}
+.krow-head .dag{font-size:26px;font-weight:600}
+.kcols{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+.kcol{padding:12px 16px;border-right:1px solid var(--rule);border-top:1px solid var(--rule)}
+.kcol:last-child{border-right:none}
+.kcol .lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-family:'IBM Plex Mono',monospace}
+.kcol .val{font-size:20px;font-weight:600;margin-top:2px}
+.kcol .sm{font-size:13.5px;color:var(--ink2)}
+.knote{border-top:1.5px dashed var(--rule);padding:10px 16px;font-size:14.5px;color:var(--ink2)}
+.chain{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:14px;margin-top:10px}
+.chain .arrow{color:var(--ink2)}
+/* ---------- ledger table ---------- */
+table{width:100%;border-collapse:collapse;background:var(--card);font-size:15px}
+th,td{border:1px solid var(--rule);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--paper2);font-weight:600;font-size:14px}
+td.num{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:14px}
+.tblwrap{overflow-x:auto;border:1.5px solid var(--ink);border-radius:6px}
+/* ---------- tracker ---------- */
+.trk-sum{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 16px}
+.trk-sum .pill{font-size:15px;padding:5px 14px;border-radius:999px;border:1.5px solid}
+.trow{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;border:1px solid var(--rule);
+  border-radius:8px;background:var(--card);padding:10px 14px;margin-bottom:8px}
+.trow .st{font-size:24px;width:48px;height:44px;border-radius:8px;border:1.5px solid var(--rule);background:#fff;cursor:pointer}
+.trow .st:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
+.st.have{background:var(--rs-soft);border-color:var(--rs)}
+.st.photo{background:var(--sa-soft);border-color:var(--sa)}
+.st.miss{background:var(--miss-soft);border-color:var(--miss)}
+.trow .nm{font-size:15.5px}
+.trow .nm .w{display:block;font-size:13px;color:var(--ink2)}
+.trow .pri{font-size:13px;color:var(--ink2);white-space:nowrap}
+.tgroup{margin:20px 0 8px;font-size:17px;font-weight:600;border-bottom:1.5px solid var(--ink);padding-bottom:4px}
+.btn{font-family:inherit;font-size:14.5px;padding:7px 16px;border-radius:8px;border:1.5px solid var(--ink);background:#fff;cursor:pointer}
+.btn:hover{background:var(--paper2)}
+.note-io{font-size:13.5px;color:var(--ink2)}
+.footer{border-top:3px double var(--ink);margin-top:40px;padding:18px 0 30px;color:var(--ink2);font-size:14px}
+.statusband{border:1.5px solid var(--miss);background:var(--miss-soft);border-radius:8px;padding:13px 16px;font-size:15.5px;margin:10px 0 18px}
+.statusband b{color:#7a231b}
+.reclink{display:inline-block;font-size:13.5px;padding:4px 12px;border:1.5px solid var(--seal);border-radius:999px;color:var(--seal);text-decoration:none;background:rgba(95,62,158,.06)}
+.reclink:hover{background:var(--seal-soft)}
+.recfile{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink2);word-break:break-all}
+.hero-figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:18px 0}
+.fig{border:1.5px solid var(--ink);border-radius:8px;background:var(--card);padding:14px 16px;position:relative;overflow:hidden}
+.fig .n{font-size:30px;font-weight:600}
+.fig .l{color:var(--ink2);font-size:14px}
+.fig .band{position:absolute;top:0;left:0;right:0;height:5px}
+@media(max-width:640px){ .trow{grid-template-columns:56px 1fr} .trow .pri{grid-column:2} }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="mast">
+    <div>
+      <div class="eyebrow" data-l="eyebrow"></div>
+      <h1><span data-l="title"></span></h1>
+      <div class="sub" data-l="subtitle"></div>
+    </div>
+    <div class="langbox" role="group" aria-label="Language">
+      <button id="lang-en" onclick="setLang('en')">English</button>
+      <button id="lang-bn" onclick="setLang('bn')">বাংলা</button>
+    </div>
+  </div>
+</div></header>
+
+<nav><div class="wrap"><div class="tabs" id="tabbar"></div></div></nav>
+
+<main><div class="wrap">
+  <section class="tabpane" id="pane-overview"></section>
+  <section class="tabpane" id="pane-sham"></section>
+  <section class="tabpane" id="pane-jal"></section>
+  <section class="tabpane" id="pane-baruna"></section>
+  <section class="tabpane" id="pane-rec"></section>
+  <section class="tabpane" id="pane-trk"></section>
+  <div class="footer" data-l="footer"></div>
+</div></main>
+
+<script>
+/* ================= i18n ================= */
+let lang='en';
+const BN_D={'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+const nb=s=>lang==='bn'?String(s).replace(/[0-9]/g,d=>BN_D[d]):String(s);
+const q=t=>t.replace(/\[\?\]/g,'<span class="unk">[?]</span>').replace(/\[অস্পষ্ট\]/g,'<span class="unk">[অস্পষ্ট]</span>');
+const L={
+ eyebrow:{en:'DISTRICT RECORD ROOM · DIGITAL FILE · MOULVIBAZAR',bn:'জেলা মহাফেজখানা · ডিজিটাল নথি · মৌলভীবাজার'},
+ title:{en:'Estate of Late Akram Ali',bn:'মৃত আক্রম আলীর ভূ-সম্পত্তি'},
+ subtitle:{en:'Mouza Shamerkona (J.L. 102) & Mouza Jalalpur (J.L. 119) — the complete record chain, 1950s → 2024',bn:'মৌজা শামেরকোনা (জে.এল. ১০২) ও মৌজা জালালপুর (জে.এল. ১১৯) — সম্পূর্ণ রেকর্ড-শৃঙ্খল, ১৯৫০-এর দশক → ২০২৪'},
+ tabs:{en:['Overview','Shamerkona','Jalalpur','Baruna','Records','Tracker'],bn:['সারসংক্ষেপ','শামেরকোনা','জালালপুর','বরুনা','খতিয়ান ও দলিল','ট্র্যাকার']},
+ footer:{en:'Prepared from certified copies and family papers, cross-verified to the shatak. Red [?] marks uncertain readings. Working reference only — not legal advice; use with a Moulvibazar land advocate.',bn:'জাবেদা নকল ও পারিবারিক কাগজপত্র হইতে প্রস্তুত, শতক পর্যন্ত মিলাইয়া যাচাইকৃত। লাল [?] = অনিশ্চিত পাঠ। ইহা কার্যসহায়ক মাত্র — আইনি পরামর্শ নহে; মৌলভীবাজারের ভূমি-আইনজীবীর সহিত ব্যবহার্য।'},
+ heirs:{en:'The five heirs',bn:'পাঁচ ওয়ারিশ'},
+ chainT:{en:'The record chain',bn:'রেকর্ড-শৃঙ্খল'},
+ dag:{en:'Dag (plot)',bn:'দাগ'},
+ cls:{en:'Land class',bn:'জমির শ্রেণী'},
+ hold:{en:'Holding in dag (Sh)',bn:'দাগে হিস্যা (শঃ)'},
+ share:{en:'Heirs’ fraction',bn:'ওয়ারিশগণের অংশ'},
+ area:{en:'Heirs’ land (Sh)',bn:'ওয়ারিশগণের জমি (শঃ)'},
+ src:{en:'Source khatiyan',bn:'আগত খতিয়ান'},
+ other:{en:'Other co-sharers',bn:'অন্য সহ-অংশীদার'},
+ all:{en:'All plots',bn:'সব দাগ'},
+ tot:{en:'Total to heirs',bn:'ওয়ারিশগণের মোট'},
+ note:{en:'Notes',bn:'টীকা'},
+ status:{en:'Status',bn:'অবস্থা'},
+ have:{en:'Certified in hand',bn:'জাবেদা নকল আছে'},
+ photo:{en:'Photocopy only',bn:'কেবল ফটোকপি'},
+ miss:{en:'Missing',bn:'অনুপস্থিত'},
+ pri:{en:'Priority',bn:'অগ্রাধিকার'},
+ hi:{en:'High',bn:'উচ্চ'}, med:{en:'Medium',bn:'মধ্যম'}, lo:{en:'Low',bn:'নিম্ন'},
+ reset:{en:'Reset tracker to defaults',bn:'ট্র্যাকার পূর্বাবস্থায় ফিরান'},
+ saved:{en:'Changes save automatically on this device.',bn:'পরিবর্তন এই ডিভাইসে স্বয়ংক্রিয়ভাবে সংরক্ষিত হয়।'},
+ nosave:{en:'Storage unavailable — changes will not persist.',bn:'সংরক্ষণ অনুপলব্ধ — পরিবর্তন থাকিবে না।'},
+ trkHow:{en:'Tap a status box to cycle it: ☐ missing → ◐ photocopy → ☑ certified.',bn:'অবস্থা-ঘরে চাপ দিলে বদলায়: ☐ অনুপস্থিত → ◐ ফটোকপি → ☑ জাবেদা।'},
+};
+/* ================= data ================= */
+const HEIRS=[
+ {en:'Sufia Bibi Ali — widow',bn:'সুফিয়া বিবি আলী — বিধবা স্ত্রী',s:'0.125'},
+ {en:'Azgor (Asgar) Ali — son',bn:'আজগর (আসগর) আলী — পুত্র',s:'0.292'},
+ {en:'Ali Akbar — son',bn:'আলী আকবর — পুত্র',s:'0.291–0.292'},
+ {en:'Rahela Begum — daughter',bn:'রাহেলা বেগম — কন্যা',s:'0.145–0.146'},
+ {en:'Sayara Begum — daughter',bn:'সায়রা বেগম — কন্যা',s:'0.143–0.146'},
+];
+const CLS={sail:{en:'Sail (wet paddy)',bn:'সাইল'},boro:{en:'Boro (paddy)',bn:'বোরো'},aman:{en:'Aman (paddy)',bn:'আমন'},
+ chara:{en:'Chara (seedling)',bn:'চারা'},bari:{en:'Bari (homestead)',bn:'বাড়ী'},pukur:{en:'Pukur (pond)',bn:'পুকুর'},
+ kabar:{en:'Kabarsthan (graveyard)',bn:'কবরস্থান'},dokan:{en:'Dokan (shop)',bn:'দোকান'}};
+/* Jalalpur — Mutation 1157, verified: area = hold × share */
+const JAL=[
+ {d:'2603',c:'bari',h:'13.00',f:'0.5',a:'6.50',k:'14',n:{en:'Kh 14 remark: Tin/1 [?]',bn:'খতিয়ান ১৪-এর মন্তব্য: টিন/১ [?]'}},
+ {d:'2604',c:'pukur',h:'10.00',f:'0.5',a:'5.00',k:'14'},
+ {d:'2660',c:'sail',h:'9.00',f:'0.5',a:'4.50',k:'14'},
+ {d:'2662',c:'sail',h:'22.00',f:'0.5',a:'11.00',k:'14'},
+ {d:'2673',c:'sail',h:'68.00',f:'0.2431',a:'16.53',k:'16'},
+ {d:'2681',c:'chara',h:'12.00',f:'0.5',a:'6.00',k:'14'},
+ {d:'2682',c:'sail',h:'2-88.00',f:'0.5',a:'1-44.00',k:'14'},
+ {d:'2683',c:'sail',h:'1-49.00',f:'0.5',a:'74.50',k:'14'},
+ {d:'2684',c:'kabar',h:'3.00',f:'0.5',a:'1.50',k:'14'},
+ {d:'2685',c:'pukur',h:'25.00',f:'0.5',a:'12.50',k:'14'},
+ {d:'2686',c:'bari',h:'70.00',f:'0.5',a:'35.00',k:'14',n:{en:'Kh 14 remark: Tin/2, ghar/1',bn:'খতিয়ান ১৪-এর মন্তব্য: টিন/২, ঘর/১'}},
+ {d:'2687',c:'pukur',h:'34.00',f:'0.5',a:'17.00',k:'14'},
+ {d:'2765',c:'sail',h:'46.00 + 27.00',f:'0.5 / 0.8889',a:'23.00 + 24.00 = 47.00',k:'14 + 15',
+  n:{en:'Two portions: 46.00 via Kh 14 (½ → 23.00) and 27.00 via Kh 15 (0.8889 → 24.00).',bn:'দুই অংশ: খতিয়ান ১৪ হইতে ৪৬.০০ (অর্ধেক → ২৩.০০) এবং খতিয়ান ১৫ হইতে ২৭.০০ (০.৮৮৮৯ → ২৪.০০)।'}},
+ {d:'2811',c:'sail',h:'74.00',f:'0.3334',a:'24.67',k:'17'},
+ {d:'2852',c:'sail',h:'9.00',f:'0.5',a:'4.50',k:'14'},
+ {d:'2854',c:'boro',h:'44.00',f:'0.5',a:'22.00',k:'14'},
+ {d:'2889',c:'sail',h:'47.00',f:'0.5',a:'23.50',k:'14'},
+ {d:'2890',c:'sail',h:'18.00',f:'0.5',a:'9.00',k:'14'},
+ {d:'2892',c:'sail',h:'42.00',f:'0.5',a:'21.00',k:'14'},
+ {d:'2893',c:'chara',h:'3.00',f:'0.5',a:'1.50',k:'14',n:{en:'Kh 14 remark: Haor (wetland) [?]',bn:'খতিয়ান ১৪-এর মন্তব্য: হাওর [?]'}},
+ {d:'2894',c:'boro',h:'26.00',f:'1.000',a:'26.00',k:'18',n:{en:'Kh 18: Akram Ali sole owner — whole holding to heirs.',bn:'খতিয়ান ১৮: একক মালিক আক্রম আলী — সম্পূর্ণ হিস্যা ওয়ারিশগণের।'}},
+ {d:'2955',c:'sail',h:'1-36.00',f:'0.5',a:'68.00',k:'14'},
+ {d:'2608 / 2678 [?]',c:'sail',h:'23.00',f:'—',a:'21.51 (0.935)',k:'26',special:true,
+  n:{en:'R.S. Khatiyan 26 — already in the brothers’ names (Azgor 0.468, Ali Akbar 0.467) with Nurul Islam 0.065; not routed through Mutation 1157. Dag digit unresolved: certified copy reads 2608, the 2018 ledger reads 2678.',
+     bn:'আর.এস. খতিয়ান ২৬ — আগে হইতেই ভাইদের নামে (আজগর ০.৪৬৮, আলী আকবর ০.৪৬৭) সহ নুরুল ইসলাম ০.০৬৫; নামজারি ১১৫৭-এর মাধ্যমে নহে। দাগ-অঙ্ক অনিষ্পন্ন: জাবেদা নকলে ২৬০৮, ২০১৮-এর খাতায় ২৬৭৮।'}},
+];
+const SHAM=[
+ {d:'2888',c:'sail',h:'25.00',f:'0.5',a:'12.50',k:'22'},
+ {d:'2893',c:'sail',h:'20.00',f:'0.5',a:'10.00',k:'22'},
+ {d:'2902',c:'dokan',h:'6.00',f:'0.5',a:'3.00',k:'22'},
+];
+/* Records library: t=type sa/rs/mu/deed; st=have/photo/miss */
+const RECS=[
+ /* ---- Shamerkona ---- */
+ {m:'sham',t:'sa',st:'have',file:'SA Khatiyan 79 Samerkona.pdf',ti:{en:'S.A. Khatiyan 79 — Samerkona',bn:'এস.এ. খতিয়ান ৭৯ — সামেরকোনা'},who:{en:'Pal family & Khowaj Ulla — earlier title chain',bn:'পাল পরিবার ও খোয়াজ উল্লা — পূর্ব-মালিকানা শৃঙ্খল'},x:{en:'1.27 acres · 18 dags — sums exactly',bn:'১.২৭ একর · ১৮ দাগ — হুবহু মিলে'}},
+ {m:'sham',t:'rs',st:'have',file:'RS Khatiyan 22 Shamerkona.pdf',ti:{en:'R.S. Khatiyan 22 — Shamerkona',bn:'আর.এস. খতিয়ান ২২ — শামেরকোনা'},who:{en:'Late Akram Ali & Nurul Islam, 0.500 each',bn:'মৃত আক্রম আলী ও নুরুল ইসলাম, প্রত্যেকে ০.৫০০'},x:{en:'51 shatak · dags 2888, 2893, 2902',bn:'৫১ শতক · দাগ ২৮৮৮, ২৮৯৩, ২৯০২'}},
+ {m:'sham',t:'mu',st:'have',file:'Mutation 1224 Shamerkona.pdf',ti:{en:'Mutation Khatiyan 1224 — Shamerkona (2024)',bn:'নামজারি খতিয়ান ১২২৪ — শামেরকোনা (২০২৪)'},who:{en:'The five heirs',bn:'পাঁচ ওয়ারিশ'},x:{en:'25.50 shatak · Case 7,813(IX-I)/2023–24 · with DCR Tk 1,100',bn:'২৫.৫০ শতক · মামলা ৭,৮১৩(IX-I)/২০২৩-২৪ · ডিসিআর ১,১০০ টাকা'}},
+ {m:'sham',t:'mu',st:'have',file:'Mutation Application 2912722 Shamerkona.pdf',ti:{en:'Mutation application & AMR fee receipt — No. 2912722 (2024)',bn:'নামজারির আবেদন ও এএমআর ফি-রসিদ — নং ২৯১২৭২২ (২০২৪)'},who:{en:'Filed 19/03/2024 by representative Jadul Miah for the five heirs',bn:'১৯/০৩/২০২৪ তারিখে প্রতিনিধি জাদুল মিয়া কর্তৃক পাঁচ ওয়ারিশের পক্ষে দাখিলকৃত'},x:{en:'The application behind Mutation 1224 — R.S. Kh 22, dags 2888 / 2893 / 2902, 0.255 ac · fee Tk 70 · records all five heirs’ passport / birth-registration numbers',bn:'নামজারি ১২২৪-এর মূল আবেদন — আর.এস. খতিয়ান ২২, দাগ ২৮৮৮ / ২৮৯৩ / ২৯০২, ০.২৫৫ একর · ফি ৭০ টাকা · পাঁচ ওয়ারিশের পাসপোর্ট/জন্ম-নিবন্ধন নম্বর লিপিবদ্ধ'}},
+ {m:'sham',t:'adm',st:'have',file:[{f:'Title Suit 313 2010 English.pdf',l:{en:'English',bn:'ইংরেজি'}},{f:'Title Suit 313 2010 Bangla.pdf',l:{en:'Bangla',bn:'বাংলা'}},{f:'Title Suit 313 2010 Certified Copy.pdf',l:{en:'Certified copy',bn:'জাবেদা নকল'}}],ti:{en:'Title Suit No. 313/2010 — Assistant Judge, Sreemangal',bn:'টাইটেল স্যুট নং ৩১৩/২০১০ — সহকারী জজ, শ্রীমঙ্গল'},who:{en:'Anoyara / Md. Anowar Ali [?] v Chan Mia & others — Akram Ali is defendant 7, Nurul Islam defendant 8',bn:'আনোয়ারা / মোঃ আনোয়ার আলী [?] বনাম চান মিয়া গং — আক্রম আলী ৭ নং, নুরুল ইসলাম ৮ নং বিবাদী'},x:{en:'S.A. dag 2135 (.36 Sh) under S.A. khatiyans 79 & 35, fronting Shamsernagar Road with shop buildings on it. Dismissed 27.5.2024 for the plaintiff’s default — no decree against the family. Whether this is the same ground as R.S. dag 2902 (the shop) is not yet established.',bn:'এস.এ. ২১৩৫ দাগ (.৩৬ শঃ), এস.এ. খতিয়ান ৭৯ ও ৩৫; শমসেরনগর রোডের পাশে, উপরে দোকানঘর। ২৭.৫.২০২৪-এ বাদীর অনুপস্থিতিতে খারিজ — পরিবারের বিরুদ্ধে কোনো ডিক্রি নাই। ইহা আর.এস. ২৯০২ (দোকান) দাগের একই ভূমি কিনা এখনো নির্ণীত নহে।'}},
+ /* ---- Jalalpur ---- */
+ {m:'jal',t:'sa',st:'have',file:'SA Khatiyan 39 Jalalpur.pdf',ti:{en:'S.A. Khatiyan 39 — Jalalpur',bn:'এস.এ. খতিয়ান ৩৯ — জালালপুর'},who:{en:'Surjan Bibi & co-sharers (incl. Achhiyat Ullah)',bn:'সুরজান বিবি ও সহ-অংশীদারগণ (অছিয়ত উল্লাসহ)'},x:{en:'2.51 acres · 11 dags — sums exactly',bn:'২.৫১ একর · ১১ দাগ — হুবহু মিলে'}},
+ {m:'jal',t:'sa',st:'have',file:'SA Khatiyan 250 Jalalpur.pdf',ti:{en:'S.A. Khatiyan 250 — Jalalpur',bn:'এস.এ. খতিয়ান ২৫০ — জালালপুর'},who:{en:'Achhiyat Ullah & Gol Jahan Bibi',bn:'অছিয়ত উল্লা ও গোল জাহান বিবি'},x:{en:'5.57 acres · three agreeing copies across ~40 years',bn:'৫.৫৭ একর · প্রায় ৪০ বৎসরে তিনটি সঙ্গতিপূর্ণ কপি'}},
+ {m:'jal',t:'sa',st:'have',file:'SA Khatiyan 42 Jalalpur.pdf',ti:{en:'S.A. Khatiyan 42 — Jalalpur',bn:'এস.এ. খতিয়ান ৪২ — জালালপুর'},who:{en:'Achhiyat Ullah',bn:'অছিয়ত উল্লা'},x:{en:'2.47 acres · 12 dags — sums exactly',bn:'২.৪৭ একর · ১২ দাগ — হুবহু মিলে'}},
+ {m:'jal',t:'sa',st:'have',file:'SA Khatiyan 265 Jalalpur.pdf',ti:{en:'S.A. Khatiyan 265 — Jalalpur',bn:'এস.এ. খতিয়ান ২৬৫ — জালালপুর'},who:{en:'Achhiyat Ullah',bn:'অছিয়ত উল্লা'},x:{en:'74 shatak · dag 2275 (Aman)',bn:'৭৪ শতক · দাগ ২২৭৫ (আমন)'}},
+ {m:'jal',t:'rs',st:'have',file:'RS Khatiyan 14 Jalalpur.pdf',ti:{en:'R.S. Khatiyan 14 — Jalalpur',bn:'আর.এস. খতিয়ান ১৪ — জালালপুর'},who:{en:'Late Akram Ali [?] & Nurul Islam, 0.500 each',bn:'মৃত আক্রম আলী [?] ও নুরুল ইসলাম, প্রত্যেকে ০.৫০০'},x:{en:'9.80 acres · 19 dags — closes exactly with dag 2765 = 46.00',bn:'৯.৮০ একর · ১৯ দাগ — দাগ ২৭৬৫ = ৪৬.০০ ধরিলে হুবহু মিলে'}},
+ {m:'jal',t:'rs',st:'have',file:[{f:'RS Khatiyan 26 Jalalpur.pdf',l:{en:'Copy 1',bn:'নকল ১'}},{f:'RS Khatiyan 26 Jalalpur Copy 2.pdf',l:{en:'Copy 2 (2024 bundle)',bn:'নকল ২ (২০২৪ বান্ডিল)'}}],ti:{en:'R.S. Khatiyan 26 — Jalalpur',bn:'আর.এস. খতিয়ান ২৬ — জালালপুর'},who:{en:'Azgor 0.468 · Ali Akbar 0.467 · Nurul Islam 0.065',bn:'আজগর ০.৪৬৮ · আলী আকবর ০.৪৬৭ · নুরুল ইসলাম ০.০৬৫'},x:{en:'23 shatak · dag 2608 / 2678 [?] — a second copy is now in hand; compare its dag digit against Copy 1',bn:'২৩ শতক · দাগ ২৬০৮ / ২৬৭৮ [?] — দ্বিতীয় একটি নকল হাতে আসিয়াছে; দাগ-অঙ্কটি নকল ১-এর সহিত মিলাইয়া দেখুন'}},
+ {m:'jal',t:'rs',st:'photo',file:'Bundle 2018 Bari land docs.pdf',ti:{en:'R.S. Khatiyans 16 & 18 — Jalalpur',bn:'আর.এস. খতিয়ান ১৬ ও ১৮ — জালালপুর'},who:{en:'Mutation sources — photocopies only (in the 2018 bundle)',bn:'নামজারির আগত — কেবল ফটোকপি (২০১৮ বান্ডিলে)'},x:{en:'Kh 18: Akram Ali sole, dag 2894 (26.00). Certified copies needed.',bn:'খতিয়ান ১৮: একক আক্রম আলী, দাগ ২৮৯৪ (২৬.০০)। জাবেদা নকল প্রয়োজন।'}},
+ {m:'jal',t:'rs',st:'miss',ti:{en:'R.S. Khatiyans 15 & 17 — Jalalpur',bn:'আর.এস. খতিয়ান ১৫ ও ১৭ — জালালপুর'},who:{en:'Mutation sources — not yet obtained',bn:'নামজারির আগত — এখনো সংগৃহীত নহে'},x:{en:'Kh 17 → dag 2811; Kh 15 → dag 2765 portion.',bn:'খতিয়ান ১৭ → দাগ ২৮১১; খতিয়ান ১৫ → দাগ ২৭৬৫-এর অংশ।'}},
+ {m:'jal',t:'rs',st:'photo',file:'Bundle 2018 Bari land docs.pdf',ti:{en:'Khatiyan 236 [?] — Azgor Ali',bn:'খতিয়ান ২৩৬ [?] — আজগর আলী'},who:{en:'Sole owner — separate holding (in the 2018 bundle)',bn:'একক মালিক — পৃথক সম্পত্তি (২০১৮ বান্ডিলে)'},x:{en:'Dag 2752 [?], Doba, ≈ 12 Sh [?].',bn:'দাগ ২৭৫২ [?], ডোবা, ≈ ১২ শঃ [?]।'}},
+ {m:'jal',t:'mu',st:'have',file:'Mutation 1157 Jalalpur.pdf',ti:{en:'Mutation Khatiyan 1157 — Jalalpur (2024)',bn:'নামজারি খতিয়ান ১১৫৭ — জালালপুর (২০২৪)'},who:{en:'The five heirs',bn:'পাঁচ ওয়ারিশ'},x:{en:'5.812 acres · Case 5,722(IX-I)/2023–24 · every figure reconciles',bn:'৫.৮১২ একর · মামলা ৫,৭২২(IX-I)/২০২৩-২৪ · প্রতিটি অঙ্ক মিলে'}},
+ {m:'jal',t:'mu',st:'have',file:'DCR Mutation 1157 Jalalpur.pdf',ti:{en:'DCR receipt — Mutation 1157 (2024)',bn:'ডিসিআর রসিদ — নামজারি ১১৫৭ (২০২৪)'},who:{en:'Applicant Azgor Ali — for the five heirs',bn:'আবেদনকারী আজগর আলী — পাঁচ ওয়ারিশের পক্ষে'},x:{en:'DCR No. 28588011905722 · deposited 13/04/2024 · mutation order dated 06/04/2024 · Case 5,722(IX-I)/2023–24',bn:'ডিসিআর নং ২৮৫৮৮০১১৯০৫৭২২ · জমা ১৩/০৪/২০২৪ · নামজারি আদেশ ০৬/০৪/২০২৪ · মামলা ৫,৭২২(IX-I)/২০২৩-২৪'}},
+ {m:'jal',t:'mu',st:'photo',file:'Khatiyan 500 Jalalpur.pdf',ti:{en:'Khatiyan 500 (revised form) — Jalalpur',bn:'খতিয়ান ৫০০ (সংশোধিত ফরম) — জালালপুর'},who:{en:'Late Nurul Islam — sole name, separate holding',bn:'প্রয়াত নুরুল ইসলাম — একক নামে, পৃথক সম্পত্তি'},x:{en:'Dags in the 2960s–2970s [?] · ≈ 2 acres + [?] · bears on the ledger-sales attribution and the cousins’ mutation status — confirm whether this copy is certified',bn:'দাগসমূহ ২৯৬০–২৯৭০-এর ঘরে [?] · ≈ ২ একরের অধিক [?] · খাতার বিক্রয়-বণ্টন ও চাচাত ভাইদের নামজারির সহিত সম্পর্কিত — এই নকলটি জাবেদা কিনা নিশ্চিত করুন'}},
+ /* ---- Baruna ---- */
+ {m:'bar',t:'deed',st:'have',file:[{f:'Kabala Deed 6006 1980 English Translation.pdf',l:{en:'English translation',bn:'ইংরেজি অনুবাদ'}},{f:'Kabala Deed 6006 1980 Bangla.pdf',l:{en:'Bangla version',bn:'বাংলা সংস্করণ'}}],ti:{en:'Kabala Deed 6006/1980',bn:'কবালা দলিল ৬০০৬/১৯৮০'},who:{en:'Md. A–m Ali [?] ← Dasharathi Das Gupta & Himangshu [?]',bn:'মোঃ আ–ম আলী [?] ← দাশরতী দাশ গুপ্ত ও হিমাংশু [?]'},x:{en:'Tk 10,000 · ≈ 2.8 acres [?] · Mouza Baruna [?] — land never obtained; see the Baruna tab',bn:'১০,০০০ টাকা · ≈ ২.৮ একর [?] · মৌজা বরুনা [?] — জমি পাওয়া যায় নাই; বরুনা ট্যাব দেখুন'}},
+ /* ---- Court ---- */
+ {m:'court',t:'deed',st:'photo',file:'Bundle 2018 Bari land docs.pdf',ti:{en:'High Court judgment — C.R. 826/1981',bn:'হাইকোর্টের রায় — সি.আর. ৮২৬/১৯৮১'},who:{en:'…fizullah & others v Akram Ali & others (in the 2018 bundle)',bn:'…ফিজউল্লাহ গং বনাম আক্রম আলী গং (২০১৮ বান্ডিলে)'},x:{en:'Title + khas possession decreed to Akram Ali’s side (T.S. 62/75 → T.A. 63/76 → revision dismissed, 20.4.1983). Suit land to be identified.',bn:'আক্রম আলীর পক্ষে স্বত্ব ও খাস দখলের ডিক্রি (টি.এস. ৬২/৭৫ → টি.এ. ৬৩/৭৬ → রিভিশন খারিজ, ২০.৪.১৯৮৩)। নালিশি ভূমি শনাক্ত করিতে হইবে।'}},
+ /* ---- Family & administrative ---- */
+ {m:'fam',t:'adm',st:'photo',file:'Nurul Islam Ledgers 2018.pdf',ti:{en:'Late Nurul Islam’s ledgers — handed over 2018',bn:'প্রয়াত নুরুল ইসলামের হিসাব-খাতা — ২০১৮ সালে প্রদত্ত'},who:{en:'Handwritten notebook — entitlement calculations and sales records',bn:'হাতে-লেখা নোটবুক — প্রাপ্য হিসাব ও বিক্রয়ের তালিকা'},x:{en:'7 pages · his figures 16.52 and 24.64 match Mutation 1157’s own arithmetic; sales reconcile exactly (1,880 → 2,043 shatak); his own sales 270 Sh = 9 keyar. Scans only — the original notebook should be secured.',bn:'৭ পৃষ্ঠা · তাঁহার ১৬.৫২ ও ২৪.৬৪ অঙ্ক নামজারি ১১৫৭-এর হিসাবের সহিত মিলে; বিক্রয় হুবহু মিলে (১,৮৮০ → ২,০৪৩ শতক); নিজ বিক্রয় ২৭০ শঃ = ৯ কেয়ার। কেবল স্ক্যান — মূল নোটবুক সংরক্ষণ করা উচিত।'}},
+ {m:'fam',t:'adm',st:'have',file:'Warishan Certificate 2022.pdf',ti:{en:'Warishan (succession) certificate — 2022',bn:'ওয়ারিশান (উত্তরাধিকারী) সনদপত্র — ২০২২'},who:{en:'The five heirs of Late Akram Ali',bn:'মৃত আক্রম আলীর পাঁচ ওয়ারিশ'},x:{en:'Issued 25.02.2022 by the Chairman, 7 No. Kamarchak Union Parishad, Rajnagar — names all five heirs and matches both 2024 mutations',bn:'২৫.০২.২০২২ তারিখে ৭নং কামারচাক ইউনিয়ন পরিষদের চেয়ারম্যান কর্তৃক ইস্যুকৃত — পাঁচ ওয়ারিশের নামসহ; উভয় ২০২৪ নামজারির সহিত মিলে'}},
+];
+/* Tracker items */
+const TRK=[
+ {g:{en:'A. Mouza Shamerkona (J.L. 102)',bn:'ক. মৌজা শামেরকোনা (জে.এল. ১০২)'}},
+ {id:'a1',d:'have',en:'R.S. Khatiyan 22 (certified copy)',bn:'আর.এস. খতিয়ান ২২ (জাবেদা নকল)',w:{en:'In hand',bn:'হাতে আছে'},p:'—'},
+ {id:'a2',d:'have',en:'Mutation Khatiyan 1224 + DCR',bn:'নামজারি খতিয়ান ১২২৪ + ডিসিআর',w:{en:'In hand',bn:'হাতে আছে'},p:'—'},
+ {id:'a3',d:'have',en:'S.A. Khatiyan 79 (Pal family)',bn:'এস.এ. খতিয়ান ৭৯ (পাল পরিবার)',w:{en:'In hand (21 Oct 2025)',bn:'হাতে আছে (২১ অক্টোবর ২০২৫)'},p:'—'},
+ {id:'a4',d:'miss',en:'S.A. predecessor of R.S. 22 (dags 2888/2893/2902)',bn:'আর.এস. ২২-এর এস.এ. পূর্বসূরি (দাগ ২৮৮৮/২৮৯৩/২৯০২)',w:{en:'District Record Room, Moulvibazar',bn:'জেলা মহাফেজখানা, মৌলভীবাজার'},p:'med'},
+ {id:'a5',d:'miss',en:'Registry index search — Shamerkona dags',bn:'রেজিস্ট্রি সূচি — শামেরকোনার দাগ',w:{en:'Sub-Registry, Moulvibazar (advocate)',bn:'সাব-রেজিস্ট্রি, মৌলভীবাজার (আইনজীবী)'},p:'hi'},
+ {id:'a6',d:'miss',en:'Mouza map — Shamerkona',bn:'মৌজা ম্যাপ — শামেরকোনা',w:{en:'DLR / Settlement Office',bn:'ডিএলআর / সেটেলমেন্ট অফিস'},p:'med'},
+ {id:'a7',d:'miss',en:'Khajna receipts in heirs’ names',bn:'ওয়ারিশগণের নামে খাজনা রসিদ',w:{en:'Union Land Office, Moulvibazar Sadar',bn:'ইউনিয়ন ভূমি অফিস, মৌলভীবাজার সদর'},p:'hi'},
+ {g:{en:'B. Mouza Jalalpur (J.L. 119)',bn:'খ. মৌজা জালালপুর (জে.এল. ১১৯)'}},
+ {id:'b1',d:'have',en:'S.A. Khatiyans 39, 250, 42, 265 (certified)',bn:'এস.এ. খতিয়ান ৩৯, ২৫০, ৪২, ২৬৫ (জাবেদা)',w:{en:'In hand',bn:'হাতে আছে'},p:'—'},
+ {id:'b2',d:'have',en:'R.S. Khatiyan 14 (certified)',bn:'আর.এস. খতিয়ান ১৪ (জাবেদা)',w:{en:'In hand',bn:'হাতে আছে'},p:'—'},
+ {id:'b3',d:'have',en:'R.S. Khatiyan 26 — dag 2608/2678 [?] to resolve',bn:'আর.এস. খতিয়ান ২৬ — দাগ ২৬০৮/২৬৭৮ [?] নিষ্পত্তি বাকি',w:{en:'Check original / mouza map',bn:'মূল নকল / মৌজা ম্যাপ দেখুন'},p:'med'},
+ {id:'b4',d:'photo',en:'R.S. Khatiyan 16 (mutation source)',bn:'আর.এস. খতিয়ান ১৬ (নামজারির আগত)',w:{en:'District Record Room',bn:'জেলা মহাফেজখানা'},p:'hi'},
+ {id:'b5',d:'miss',en:'R.S. Khatiyan 17 (dag 2811)',bn:'আর.এস. খতিয়ান ১৭ (দাগ ২৮১১)',w:{en:'District Record Room',bn:'জেলা মহাফেজখানা'},p:'hi'},
+ {id:'b6',d:'photo',en:'R.S. Khatiyan 18 (dag 2894)',bn:'আর.এস. খতিয়ান ১৮ (দাগ ২৮৯৪)',w:{en:'District Record Room',bn:'জেলা মহাফেজখানা'},p:'hi'},
+ {id:'b7',d:'miss',en:'R.S. Khatiyan 15 (dag 2765 portion)',bn:'আর.এস. খতিয়ান ১৫ (দাগ ২৭৬৫-এর অংশ)',w:{en:'District Record Room',bn:'জেলা মহাফেজখানা'},p:'hi'},
+ {id:'b8',d:'photo',en:'Khatiyan 236 [?] (Azgor Ali sole)',bn:'খতিয়ান ২৩৬ [?] (একক আজগর আলী)',w:{en:'Record Room / AC (Land), Rajnagar',bn:'মহাফেজখানা / এসি (ল্যান্ড), রাজনগর'},p:'med'},
+ {id:'b9',d:'have',en:'Mutation Khatiyan 1157 (2024)',bn:'নামজারি খতিয়ান ১১৫৭ (২০২৪)',w:{en:'In hand',bn:'হাতে আছে'},p:'—'},
+ {id:'b10',d:'have',en:'DCR receipt of Mutation 1157',bn:'নামজারি ১১৫৭-এর ডিসিআর রসিদ',w:{en:'In hand — DCR No. 28588011905722, 13.04.2024 (see Records tab)',bn:'হাতে আছে — ডিসিআর নং ২৮৫৮৮০১১৯০৫৭২২, ১৩.০৪.২০২৪ (খতিয়ান ও দলিল ট্যাব দেখুন)'},p:'—'},
+ {id:'b11',d:'miss',en:'Registry index — Jalalpur dags + ledger-sales attribution',bn:'রেজিস্ট্রি সূচি — জালালপুরের দাগ + খাতার বিক্রয়-বণ্টন',w:{en:'Sub-Registries Rajnagar & Moulvibazar',bn:'সাব-রেজিস্ট্রি রাজনগর ও মৌলভীবাজার'},p:'hi'},
+ {id:'b12',d:'miss',en:'Mouza map — Jalalpur',bn:'মৌজা ম্যাপ — জালালপুর',w:{en:'DLR / Settlement Office',bn:'ডিএলআর / সেটেলমেন্ট অফিস'},p:'med'},
+ {id:'b13',d:'miss',en:'Khajna receipts — Jalalpur',bn:'খাজনা রসিদ — জালালপুর',w:{en:'Union Land Office, Rajnagar',bn:'ইউনিয়ন ভূমি অফিস, রাজনগর'},p:'hi'},
+ {id:'b14',d:'miss',en:'Cousins’ succession-mutation status check',bn:'চাচাত ভাইদের উত্তরাধিকার-নামজারির অবস্থা যাচাই',w:{en:'AC (Land), Rajnagar (advocate)',bn:'এসি (ল্যান্ড), রাজনগর (আইনজীবী)'},p:'med'},
+ {g:{en:'C. Court papers',bn:'গ. আদালতের কাগজপত্র'}},
+ {id:'c1',d:'photo',en:'High Court judgment C.R. 826/1981',bn:'হাইকোর্টের রায় সি.আর. ৮২৬/১৯৮১',w:{en:'Certified copy: High Court Division, Dhaka',bn:'জাবেদা নকল: হাইকোর্ট বিভাগ, ঢাকা'},p:'hi'},
+ {id:'c2',d:'miss',en:'Title Appeal 63/76 — judgment & decree',bn:'টাইটেল আপিল ৬৩/৭৬ — রায় ও ডিক্রি',w:{en:'District Judge’s record room, Sylhet',bn:'জেলা জজের রেকর্ড রুম, সিলেট'},p:'hi'},
+ {id:'c4',d:'have',en:'Title Suit 313/2010 — certified copy of plaint & dismissal order (27.5.2024)',bn:'টাইটেল স্যুট ৩১৩/২০১০ — আরজি ও খারিজ আদেশের জাবেদা নকল (২৭.৫.২০২৪)',w:{en:'In hand — see Records tab',bn:'হাতে আছে — খতিয়ান ও দলিল ট্যাব দেখুন'},p:'—'},
+ {id:'c5',d:'miss',en:'Suit 313/2010 — full order sheet; check for any restoration application or appeal',bn:'স্যুট ৩১৩/২০১০ — সম্পূর্ণ আদেশপত্র; পুনরুজ্জীবনের দরখাস্ত বা আপিল হইয়াছে কিনা যাচাই',w:{en:'Assistant Judge’s Court, Sreemangal (advocate)',bn:'সহকারী জজ আদালত, শ্রীমঙ্গল (আইনজীবী)'},p:'hi'},
+ {id:'c6',d:'miss',en:'S.A. Khatiyan 35 — the other suit khatiyan; and the S.A. 2135 → R.S. dag conversion',bn:'এস.এ. খতিয়ান ৩৫ — দ্বিতীয় নালিশা খতিয়ান; এবং এস.এ. ২১৩৫ → আর.এস. দাগ রূপান্তর',w:{en:'District Record Room / Settlement Office, Moulvibazar',bn:'জেলা মহাফেজখানা / সেটেলমেন্ট অফিস, মৌলভীবাজার'},p:'hi'},
+ {id:'c3',d:'miss',en:'Title Suit 62/75 — judgment, decree & plaint schedule',bn:'টাইটেল স্যুট ৬২/৭৫ — রায়, ডিক্রি ও আরজির তফসিল',w:{en:'Sylhet — identifies the suit land',bn:'সিলেট — নালিশি ভূমি শনাক্ত করে'},p:'hi'},
+ {g:{en:'D. The 1980 deed',bn:'ঘ. ১৯৮০ সালের দলিল'}},
+ {id:'d1',d:'have',en:'Kabala Deed 6006/1980 — re-photo sheet-1 lines 1–3; re-scan flat',bn:'কবালা দলিল ৬০০৬/১৯৮০ — ১ম পাতার ১–৩ পঙ্‌ক্তি পুনঃছবি; সমতল পুনঃস্ক্যান',w:{en:'Action on the held copy',bn:'হাতে থাকা কপিতে করণীয়'},p:'hi'},
+ {id:'d2',d:'miss',en:'Fresh record-room copy of Deed 6006/1980',bn:'দলিল ৬০০৬/১৯৮০-এর নতুন রেকর্ড-রুম কপি',w:{en:'District Registrar, Moulvibazar',bn:'জেলা রেজিস্ট্রার, মৌলভীবাজার'},p:'med'},
+ {id:'d3',d:'miss',en:'Current khatiyan of the deed’s dags (Baruna [?], J.L. 47 [?])',bn:'দলিলের দাগের বর্তমান খতিয়ান (বরুনা [?], জে.এল. ৪৭ [?])',w:{en:'Upazila / Union Land Office, Sreemangal [?]',bn:'উপজেলা/ইউনিয়ন ভূমি অফিস, শ্রীমঙ্গল [?]'},p:'med'},
+ {id:'d4',d:'miss',en:'Registry index — Das Gupta vendors 1975–85',bn:'রেজিস্ট্রি সূচি — দাস গুপ্ত বিক্রেতাগণ ১৯৭৫–৮৫',w:{en:'Sub-Registry, Moulvibazar / Rajnagar',bn:'সাব-রেজিস্ট্রি, মৌলভীবাজার / রাজনগর'},p:'med'},
+ {g:{en:'E. Administrative & family',bn:'ঙ. প্রশাসনিক ও পারিবারিক'}},
+ {id:'e1',d:'photo',en:'Late Nurul Islam’s ledgers — secure the original notebook',bn:'প্রয়াত নুরুল ইসলামের খাতা — মূল নোটবুক সংরক্ষণ',w:{en:'Scans in hand — see Records tab; secure the original',bn:'স্ক্যান আছে — খতিয়ান ও দলিল ট্যাব দেখুন; মূলটি সংরক্ষণ করুন'},p:'med'},
+ {id:'e2',d:'miss',en:'Registered Power of Attorney (narrow)',bn:'রেজিস্ট্রিকৃত আমমোক্তারনামা (সীমিত)',w:{en:'BD High Commission, London → registration in BD',bn:'বাংলাদেশ হাইকমিশন, লন্ডন → বাংলাদেশে রেজিস্ট্রেশন'},p:'hi'},
+ {id:'e3',d:'miss',en:'Heirs’ written pact',bn:'ওয়ারিশগণের লিখিত সমঝোতা',w:{en:'Draft with the advocate',bn:'আইনজীবীর সহিত খসড়া'},p:'hi'},
+ {id:'e4',d:'have',en:'Warishan certificate copies — heirs of Akram Ali',bn:'ওয়ারিশান সনদের কপি — আক্রম আলীর ওয়ারিশ',w:{en:'In hand — 25.02.2022, Kamarchak U.P. (see Records tab)',bn:'হাতে আছে — ২৫.০২.২০২২, কামারচাক ইউ.পি. (খতিয়ান ও দলিল ট্যাব দেখুন)'},p:'—'},
+];
+const CYCLE=['miss','photo','have']; const SYM={have:'☑',photo:'◐',miss:'☐'};
+let trkState={}; let storageOK=false;
+/* ================= rendering ================= */
+const $=id=>document.getElementById(id);
+function badge(t){const m={sa:['b-sa',{en:'S.A.',bn:'এস.এ.'}],rs:['b-rs',{en:'R.S.',bn:'আর.এস.'}],mu:['b-mu',{en:'Mutation',bn:'নামজারি'}],deed:['b-deed',{en:'Deed / Court',bn:'দলিল / আদালত'}],adm:['b-deed',{en:'Certificate',bn:'সনদ'}]}[t];
+ return `<span class="badge ${m[0]}">${m[1][lang]}</span>`}
+function statChip(st){const c={have:'s-have',photo:'s-photo',miss:'s-miss'}[st];return `<span class="stat ${c}">${SYM[st]} ${L[st==='have'?'have':st==='photo'?'photo':'miss'][lang]}</span>`}
+function srcBadge(k){ if(k==='22')return badge('rs')+` <span class="mono">${nb('22')}</span>`;
+ if(k==='26')return badge('rs')+` <span class="mono">${nb('26')}</span>`;
+ return `<span class="badge b-rs">${lang==='bn'?'আর.এস.':'R.S.'}</span> <span class="mono">${nb(k)}</span>`}
+function plotDetail(p,mouza){
+ const src=p.k, chainRs = mouza==='sham'?'22':'14–18';
+ return `<div class="krow">
+  <div class="krow-head">
+    <div><span class="lab" style="font-family:'IBM Plex Mono';font-size:12px;color:var(--ink2)">${L.dag[lang]}</span>
+      <div class="dag mono">${nb(p.d)}</div></div>
+    <div>${badge(p.special?'rs':'mu')} ${srcBadge(src)}</div>
+  </div>
+  <div class="kcols">
+    <div class="kcol"><div class="lab">${L.cls[lang]}</div><div class="val">${CLS[p.c][lang]}</div></div>
+    <div class="kcol"><div class="lab">${L.hold[lang]}</div><div class="val mono">${nb(p.h)}</div></div>
+    <div class="kcol"><div class="lab">${L.share[lang]}</div><div class="val mono">${nb(p.f)}</div></div>
+    <div class="kcol"><div class="lab">${L.area[lang]}</div><div class="val mono">${nb(p.a)}</div>
+      <div class="sm">${lang==='bn'?'শতক (১ শতক = একরের ১/১০০)':'shatak (1 Sh = 1/100 acre)'}</div></div>
+  </div>
+  ${p.n?`<div class="knote">${q(p.n[lang])}</div>`:''}
+  <div class="knote">
+    <strong>${L.other[lang]}:</strong> ${p.special
+      ? (lang==='bn'?'নুরুল ইসলাম ০.০৬৫ (তাঁহার ওয়ারিশগণ)':'Nurul Islam 0.065 (now his heirs)')
+      : (lang==='bn'?'অবশিষ্টাংশ প্রয়াত নুরুল ইসলামের ওয়ারিশগণ (এবং প্রযোজ্যক্ষেত্রে অন্যান্য)':'the balance is with Late Nurul Islam’s heirs (and others where applicable)')}
+    <div class="chain"><strong>${L.chainT[lang]}:</strong>
+      <span class="badge b-sa">${lang==='bn'?'এস.এ.':'S.A.'}</span><span class="arrow">→</span>
+      <span class="badge b-rs">${lang==='bn'?'আর.এস. '+nb(mouza==='sham'?'22':src==='26'?'26':src):'R.S. '+(mouza==='sham'?'22':src==='26'?'26':src)}</span><span class="arrow">→</span>
+      ${p.special?`<span class="badge b-rs">${lang==='bn'?'নামজারির বাহিরে':'outside the mutation'}</span>`
+        :`<span class="badge b-mu">${lang==='bn'?(mouza==='sham'?'নামজারি ১২২৪':'নামজারি ১১৫৭'):(mouza==='sham'?'Mutation 1224':'Mutation 1157')} (${nb('2024')})</span>`}
+    </div>
+  </div>
+ </div>`;
+}
+function plotTable(list){
+ let r=list.map(p=>`<tr><td class="mono">${nb(p.d)}</td><td>${CLS[p.c][lang]}</td><td class="num">${nb(p.h)}</td><td class="num">${nb(p.f)}</td><td class="num">${nb(p.a)}</td><td>${srcBadge(p.k)}</td></tr>`).join('');
+ return `<div class="tblwrap"><table><thead><tr><th>${L.dag[lang]}</th><th>${L.cls[lang]}</th><th>${L.hold[lang]}</th><th>${L.share[lang]}</th><th>${L.area[lang]}</th><th>${L.src[lang]}</th></tr></thead><tbody>${r}</tbody></table></div>`;
+}
+function mouzaPane(id,list,mouza,intro,total){
+ const pane=$(id); let sel=pane.dataset.sel||'0';
+ const pills=list.map((p,i)=>`<button class="${sel==String(i)?'on':''}" onclick="selPlot('${id}','${mouza}',${i})">${nb(p.d)}</button>`).join('')
+   +`<button class="${sel==='all'?'on':''}" onclick="selPlot('${id}','${mouza}','all')">${L.all[lang]}</button>`;
+ const body = sel==='all'? plotTable(list) : plotDetail(list[Number(sel)],mouza);
+ pane.innerHTML=`<h2>${intro.t[lang]}</h2><p class="lead">${q(intro.p[lang])}</p>
+  <div class="pills" role="tablist">${pills}</div>${body}
+  <p style="margin-top:14px"><strong>${L.tot[lang]}:</strong> ${total[lang]}</p>`;
+}
+window.selPlot=(id,mouza,i)=>{$(id).dataset.sel=String(i);render();}
+/* ---------- panes ---------- */
+function overview(){
+ $('pane-overview').innerHTML=`
+  <div class="hero-figs">
+    <div class="fig"><div class="band" style="background:var(--mu)"></div><div class="n mono">${nb('5.812')}</div><div class="l">${lang==='bn'?'একর — জালালপুর, নামজারি ১১৫৭ (২০২৪)':'acres — Jalalpur, Mutation 1157 (2024)'}</div></div>
+    <div class="fig"><div class="band" style="background:var(--mu)"></div><div class="n mono">${nb('0.255')}</div><div class="l">${lang==='bn'?'একর — শামেরকোনা, নামজারি ১২২৪ (২০২৪)':'acres — Shamerkona, Mutation 1224 (2024)'}</div></div>
+    <div class="fig"><div class="band" style="background:var(--rs)"></div><div class="n mono">${nb('0.215')}</div><div class="l">${lang==='bn'?'একর — খতিয়ান ২৬-এ ভাইদের অংশ':'acres — the brothers’ share in Khatiyan 26'}</div></div>
+    <div class="fig"><div class="band" style="background:var(--seal)"></div><div class="n mono">${nb('26')}</div><div class="l">${lang==='bn'?'দাগ — দুই মৌজায় নথিভুক্ত':'plots recorded across the two mouzas'}</div></div>
+  </div>
+  <div class="grid g2">
+   <div class="card"><span class="type-tab t-mu"></span><h3 style="margin-top:0">${L.heirs[lang]}</h3>
+    <dl class="kv">${HEIRS.map(h=>`<dt>${h[lang]}</dt><dd class="mono">${nb(h.s)}</dd>`).join('')}</dl>
+    <p class="note-io" style="margin-top:8px">${lang==='bn'?'অংশ প্রতিটি নামজারিতে মুদ্রিত ভগ্নাংশ অনুযায়ী; দুই নামজারিতে সামান্য ভিন্ন গোলকরণ।':'Fractions as printed in each mutation; the two mutations round slightly differently.'}</p></div>
+   <div class="card"><span class="type-tab t-rs"></span><h3 style="margin-top:0">${L.chainT[lang]}</h3>
+    <div class="chain" style="margin:6px 0 10px">
+      <span class="badge b-sa">${lang==='bn'?'এস.এ. (১৯৫০-এর দশক)':'S.A. (1950s)'}</span><span class="arrow">→</span>
+      <span class="badge b-rs">${lang==='bn'?'আর.এস. (১৯৯৬–২০১৫)':'R.S. (1996–2015)'}</span><span class="arrow">→</span>
+      <span class="badge b-mu">${lang==='bn'?'নামজারি (২০২৪)':'Mutation (2024)'}</span></div>
+    <p style="font-size:15px">${lang==='bn'
+      ?'অছিয়ত উল্লার এস.এ. রেকর্ড → পুত্র আক্রম আলী ও নুরুল ইসলামের আর.এস. খতিয়ান → আক্রম আলীর মৃত্যুর পর ২০২৪-এর দুই নামজারিতে তাঁহার অংশ পাঁচ ওয়ারিশের নামে। প্রতিটি ধাপ শতক পর্যন্ত মিলাইয়া যাচাইকৃত।'
+      :'Achhiyat Ullah’s S.A. records → his sons’ R.S. khatiyans (Akram Ali & Nurul Islam) → after Akram Ali’s death, the two 2024 mutations recorded his share to the five heirs. Every step reconciles to the shatak.'}</p></div>
+   <div class="card"><span class="type-tab t-deed"></span>
+    <div style="display:flex;gap:12px;align-items:flex-start"><span class="seal">${lang==='bn'?'জাবেদা<br>নকল':'CERT.<br>COPY'}</span>
+    <div><h3 style="margin-top:0">${lang==='bn'?'দুইটি বিশেষ দলিল':'Two special documents'}</h3>
+    <p style="font-size:15px">${q(lang==='bn'
+      ?'হাইকোর্টের রায় (সি.আর. ৮২৬/১৯৮১): আক্রম আলীর পক্ষে স্বত্ব ও খাস দখলের ডিক্রি — তিন স্তরে বহাল। কবালা দলিল ৬০০৬/১৯৮০ (১০,০০০ টাকা, ≈ ২.৮ একর [?]): রেজিস্ট্রিকৃত অথচ জমি কখনো পাওয়া যায় নাই — বিস্তারিত বরুনা ট্যাবে দেখুন; বণ্টন-আলোচনার বাহিরে রাখা কৌশলপত্রের পরামর্শ।'
+      :'The High Court judgment (C.R. 826/1981): title and khas possession decreed to Akram Ali’s side, upheld at three tiers. Kabala Deed 6006/1980 (Tk 10,000, ≈ 2.8 acres [?]): registered yet the land was never obtained — see the Baruna tab for the full picture, and the strategy paper keeps it out of the partition talks.')}</p></div></div></div>
+  </div>`;
+}
+function baruna(){
+ $('pane-baruna').innerHTML=`
+  <h2>${lang==='bn'?'মৌজা বরুনা [?] — ১৯৮০ সালের কবালা দলিল':'Mouza Baruna [?] — the 1980 Kabala Deed'}</h2>
+  <p class="lead">${q(lang==='bn'
+    ?'পারিবারিক কাগজপত্রে বর্ণিত তৃতীয় একটি ভূমি — কিন্তু যাহা পরিবার প্রকৃতপক্ষে কখনো ভোগদখল করে নাই। এই ট্যাবে ১৯৮০ সালের রেজিস্ট্রিকৃত দলিল যাহা বলে তাহা এবং শামেরকোনা ও জালালপুর হইতে ইহাকে কেন ভিন্নভাবে দেখা হয় তাহা তুলিয়া ধরা হইয়াছে।'
+    :'A third piece of land in the family’s papers — but one the family never actually held. This tab covers what the 1980 registered deed says, and why it is treated differently from Shamerkona and Jalalpur.')}</p>
+
+  <div class="statusband"><b>${lang==='bn'?'রেজিস্ট্রিকৃত — কিন্তু কখনো দখলে আসে নাই।':'Registered — but never possessed.'}</b>
+   ${q(lang==='bn'
+     ?' ১৯৮০ সালে ক্রীত ও সাব-রেজিস্ট্রি অফিস, রাজনগরে সম্পূর্ণ রেজিস্ট্রিকৃত — অথচ এই ভূমির কোনো দাগ পরিবারের বর্তমান কোনো খতিয়ানে নাই। পারিবারিক বিবরণ: চাচা পিতার পক্ষে এই জমি ক্রয় করিয়াছিলেন; বিক্রেতাগণ পরিবারকে প্রতারিত করেন এবং জমি কখনো পাওয়া যায় নাই।'
+     :' Purchased in 1980 and fully registered at the Sub-Registry Office, Rajnagar — yet none of this land’s plots appear in any of the family’s current khatiyans. Family account: the uncle bought this land on the father’s behalf; the sellers swindled the family and the land was never obtained.')}</div>
+
+  <div class="grid g2">
+   <div class="card"><span class="type-tab t-deed"></span>
+    <div style="display:flex;gap:12px;align-items:flex-start"><span class="seal">${lang==='bn'?'১৯৮০<br>দলিল':'1980<br>DEED'}</span>
+    <div style="flex:1"><h3 style="margin-top:0">${lang==='bn'?'দলিলের মূল তথ্যাদি':'Key particulars'}</h3>
+    <dl class="kv" style="font-size:15px">
+     <dt>${lang==='bn'?'দলিল নং':'Deed No.'}</dt><dd>${q(lang==='bn'?'৬০০৬/১৯৮০ [৩০০৩? — শেষ পাতার পৃষ্ঠাঙ্কনে নিষ্পত্তি]':'6006/1980 [or 3003? — settle from the endorsement sheet]')}</dd>
+     <dt>${lang==='bn'?'সম্পাদন':'Executed'}</dt><dd>${q('18.4.1980 [?]')}</dd>
+     <dt>${lang==='bn'?'মূল্য':'Price'}</dt><dd>${q(lang==='bn'?'১০,০০০ টাকা [বিকল্প পাঠ ২০,০০০ [?]]':'Tk 10,000 [alt. reading 20,000 [?]]')}</dd>
+     <dt>${lang==='bn'?'ক্রেতা':'Purchaser'}</dt><dd>${q(lang==='bn'?'মোঃ আ–ম আলী [?] (সম্ভবত আক্রম আলী)':'Md. A–m Ali [?] (possibly Akram Ali)')}</dd>
+     <dt>${lang==='bn'?'বিক্রেতা':'Vendors'}</dt><dd>${q(lang==='bn'?'দাশরতী দাশ গুপ্ত, পিতা মৃত দীনেশ চন্দ্র দাশ গুপ্ত; সহ হিমাংশু [?]':'Dasharathi Das Gupta, s/o late Dinesh Chandra Das Gupta; with Himangshu [?]')}</dd>
+     <dt>${lang==='bn'?'অবস্থান':'Location'}</dt><dd>${q(lang==='bn'?'মৌজা বরুনা / মতিয়া [?], জে.এল. ৪৭, থানা শ্রীমঙ্গল [?], পরগনা চৌয়াল্লিশ':'Mouza Baruna / Motiya [?], J.L. 47, Thana Sreemangal [?], Pargana Chowallish')}</dd>
+     <dt>${lang==='bn'?'উল্লিখিত খতিয়ান':'Khatiyans named'}</dt><dd>${q('412 & 411 [?]')}</dd>
+     <dt>${lang==='bn'?'পরিমাণ':'Quantity'}</dt><dd>${q(lang==='bn'?'≈ ২ একর ৮০ শতক (≈২.৮ একর) [?]':'≈ 2 acres 80 shatak (≈2.8 acres) [?]')}</dd>
+     <dt>${lang==='bn'?'রেজিস্ট্রেশন':'Registration'}</dt><dd>${q(lang==='bn'?'সাব-রেজিস্ট্রি, রাজনগর — ৫.৯.১৯৮০; বহি ~৬২, পৃঃ ২৫৭–২৯০ [?]':'Sub-Registry, Rajnagar — 5.9.1980; Book ~62, pp 257–290 [?]')}</dd>
+    </dl>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <a class="reclink" href="records/Kabala%20Deed%206006%201980%20English%20Translation.pdf" target="_blank" rel="noopener">📄 ${lang==='bn'?'ইংরেজি অনুবাদ':'English translation'}</a>
+      <a class="reclink" href="records/Kabala%20Deed%206006%201980%20Bangla.pdf" target="_blank" rel="noopener">📄 ${lang==='bn'?'বাংলা সংস্করণ':'Bangla version'}</a>
+    </div></div></div></div>
+
+   <div class="card"><span class="type-tab t-deed"></span>
+    <h3 style="margin-top:0">${lang==='bn'?'তফসিলের নমুনা — অসম্পূর্ণ ও অযাচাইকৃত':'Schedule extract — partial and unverified'}</h3>
+    <p style="font-size:15px">${q(lang==='bn'
+      ?'দলিলের তফসিলে এই তথ্যাদির অপেক্ষা আরও বহু দাগ তালিকাভুক্ত — কিন্তু হস্তলিপি এতই ক্ষীণ যে নির্ভরযোগ্য দাগ-ওয়ারি পাঠ সম্ভব নহে। পাঠযোগ্য কিছু অংশ: দাগ (দুই পাঠ মিলাইয়া) ৭৩, ৭৬, ৭৭, ৭৯, ১২৯, ১৩৪, ১৭৭, ২৩৫, ২৪৮, ২৪৯, ২৫৪, ২৫৫ এবং ১৪০/১৬৪/১৬৫/১৯৪/২০২/২০৪ [?], ও ২৭–২৮ ও ৬৫–৬৬ শতকের কাছাকাছি কিছু পরিমাণ — কিন্তু ইহা আংশিক নমুনা মাত্র, সম্পূর্ণ বা নিশ্চিত দাগ-তালিকা নহে।'
+      :'The deed’s schedule (tafsil) lists many more plots than these facts capture — the handwriting is too faint for a reliable dag-by-dag reading. Legible fragments include dag numbers (two readings combined) 73, 76, 77, 79, 129, 134, 177, 235, 248, 249, 254, 255 and 140/164/165/194/202/204 [?], and areas around 27–28 and 65–66 shatak — but this is a partial sample, not a complete or confirmed plot list.')}</p>
+    <p style="font-size:14.5px;color:var(--ink2)">${q(lang==='bn'
+      ?'এই কারণে এই মৌজার জন্য শামেরকোনা/জালালপুরের মতো দাগ-ভিত্তিক তালিকা দেওয়া হয় নাই — নির্ভরযোগ্য উপাত্ত ব্যতীত মিথ্যা নিশ্চয়তা দেখানো এড়াইতে।'
+      :'For this reason this mouza doesn’t get a dag-by-dag list the way Shamerkona and Jalalpur do — better to show the real gap than false precision.')}</p></div>
+  </div>
+
+  <h3>${lang==='bn'?'কেন ইহা ভিন্নভাবে দেখা হয়':'Why it’s treated differently'}</h3>
+  <p style="font-size:15px;max-width:74ch">${q(lang==='bn'
+    ?'প্রায় ৪৫ বৎসর দখলহীন থাকিবার পর এই জমি পুনরুদ্ধার অত্যন্ত অসম্ভাব্য — সাধারণ মেয়াদোত্তীর্ণ আইন বহু পূর্বে অতিক্রান্ত, এবং অর্পিত সম্পত্তি ফেরতের বিশেষ সময়সীমা প্রায় ২০১২–১৩ সালে বন্ধ হইয়া যায়। তাই উত্তরাধিকার কৌশলপত্র ইহাকে অনাদায়ী ব্যয় (sunk cost) হিসাবে গণ্য করে এবং শামেরকোনা ও জালালপুরের বণ্টন-আলোচনার বাহিরে রাখে, যাহাতে ইহা প্রতিপক্ষের জন্য বিতর্কের বিষয় না হয়।'
+    :'After roughly 45 years without possession, recovering this land is very unlikely — the ordinary limitation period has long expired, and the special windows for reclaiming vested-property land closed around 2012–13. The inheritance strategy therefore treats this as a sunk cost and keeps it out of the partition talks over Shamerkona and Jalalpur, so it doesn’t become something for the other side to argue about.')}</p>
+
+  <h3>${lang==='bn'?'তবু যাহা নিষ্পত্তি করা দরকার':'Still worth settling'}</h3>
+  <div class="tblwrap"><table><tbody>
+   <tr><td style="width:46%">${lang==='bn'?'১ম পাতার ১–৩ পঙ্‌ক্তি পুনঃছবি (ক্রেতার নাম ও সঠিক পরিমাণ নিশ্চিতে)':'Re-photograph sheet 1, lines 1–3 (confirms buyer’s name & exact quantity)'}</td>
+    <td>${lang==='bn'?'হাতে থাকা কপিতেই করণীয়':'Action on the copy already held'}</td></tr>
+   <tr><td>${lang==='bn'?'নতুন জাবেদা নকল':'Fresh certified copy'}</td>
+    <td>${lang==='bn'?'জেলা রেজিস্ট্রারের দফতর, মৌলভীবাজার':'District Registrar’s office, Moulvibazar'}</td></tr>
+   <tr><td>${lang==='bn'?'এই দাগসমূহের বর্তমান খতিয়ান — এখন কাহার নামে':'Current khatiyan of these dags — who holds them today'}</td>
+    <td>${lang==='bn'?'সংশ্লিষ্ট মৌজার ভূমি অফিস':'Local Union / Upazila Land Office'}</td></tr>
+   <tr><td>${lang==='bn'?'দাস গুপ্ত বিক্রেতাগণের রেজিস্ট্রি সূচি, ১৯৭৫–৮৫ (দ্বৈত-বিক্রয় যাচাই)':'Registry index — Das Gupta vendors, 1975–85 (double-sale check)'}</td>
+    <td>${lang==='bn'?'সাব-রেজিস্ট্রি, মৌলভীবাজার / রাজনগর':'Sub-Registry, Moulvibazar / Rajnagar'}</td></tr>
+  </tbody></table></div>
+  <p style="font-size:14px;color:var(--ink2);margin-top:8px">${lang==='bn'
+    ?'এই চারটি আইটেম ট্র্যাকার ট্যাবের \u201Cঘ. ১৯৮০ সালের দলিল\u201D অংশেও রহিয়াছে।'
+    :'These four items also appear under the Tracker tab, group D — the 1980 deed.'}</p>
+ `;
+}
+
+function recs(){
+ const G=[
+  {id:'sham',t:{en:'Mouza Shamerkona — J.L. 102, Moulvibazar Sadar',bn:'মৌজা শামেরকোনা — জে.এল. ১০২, মৌলভীবাজার সদর'}},
+  {id:'jal',t:{en:'Mouza Jalalpur — J.L. 119, Rajnagar',bn:'মৌজা জালালপুর — জে.এল. ১১৯, রাজনগর'}},
+  {id:'bar',t:{en:'Mouza Baruna [?] — J.L. 47 [?] · the 1980 deed',bn:'মৌজা বরুনা [?] — জে.এল. ৪৭ [?] · ১৯৮০ সালের দলিল'}},
+  {id:'court',t:{en:'Court papers — Sylhet & High Court Division',bn:'আদালতের কাগজপত্র — সিলেট ও হাইকোর্ট বিভাগ'}},
+  {id:'fam',t:{en:'Family & administrative',bn:'পারিবারিক ও প্রশাসনিক'}},
+ ];
+ const card=r=>`
+   <div class="card"><span class="type-tab t-${r.t}"></span>
+    <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">${badge(r.t)} ${statChip(r.st)}</div>
+    <h3 style="margin:8px 0 2px">${q(r.ti[lang])}</h3>
+    <div style="color:var(--ink2);font-size:15px">${q(r.who[lang])}</div>
+    <div style="font-size:15px;margin-top:6px">${q(r.x[lang])}</div>
+    ${r.file?`<div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">${(Array.isArray(r.file)?r.file:[{f:r.file}]).map(o=>`<a class="reclink" href="records/${encodeURI(o.f)}" target="_blank" rel="noopener">📄 ${o.l?o.l[lang]:(lang==='bn'?'নকল দেখুন':'View copy')}</a> <span class="recfile">records/${o.f}</span>`).join(' ')}</div>`:''}
+   </div>`;
+ let out=`<h2>${lang==='bn'?'খতিয়ান ও দলিলের ভান্ডার':'Record library'}</h2>
+  <p class="lead">${lang==='bn'?'মৌজা-ওয়ারি সাজানো — প্রতিটি রেকর্ডের ধরন, ধারক, মোট পরিমাণ ও নকলের অবস্থা।':'Grouped by mouza — each record’s type, holders, total and copy status.'}</p>
+  <p class="note-io" style="margin-top:6px">${lang==='bn'
+    ?'“নকল দেখুন” লিংকগুলি এই পাতার পাশের records/ ফোল্ডারের স্ক্যান-ফাইল খোলে। গিটহাব রিপোজিটরিতে ঐ নামের ফোল্ডার তৈরি করিয়া প্রতিটি স্ক্যান লিংকের পাশে দেখানো হুবহু নামে আপলোড করিলেই লিংক কাজ করিবে।'
+    :'The “View copy” links open scans from a records/ folder next to this page. Create that folder in your GitHub repository and upload each scan with the exact filename shown beside the link — the links then work automatically.'}</p>`;
+ G.forEach(g=>{
+   const items=RECS.filter(r=>r.m===g.id);
+   out+=`<h3 style="border-bottom:1.5px solid var(--ink);padding-bottom:4px;margin-top:26px">${q(g.t[lang])}</h3>
+    <div class="grid g2" style="margin-top:12px">${items.map(card).join('')}</div>`;
+ });
+ $('pane-rec').innerHTML=out;
+}
+function tracker(){
+ const counts={have:0,photo:0,miss:0};
+ TRK.filter(t=>t.id).forEach(t=>counts[trkState[t.id]||t.d]++);
+ let html=`<h2>${lang==='bn'?'ভূমি রেকর্ড ট্র্যাকার':'Land records tracker'}</h2>
+  <p class="lead">${L.trkHow[lang]} <span class="note-io">${storageOK?L.saved[lang]:L.nosave[lang]}</span></p>
+  <div class="trk-sum">
+   <span class="pill" style="background:var(--rs-soft);border-color:var(--rs)">☑ ${nb(counts.have)} — ${L.have[lang]}</span>
+   <span class="pill" style="background:var(--sa-soft);border-color:var(--sa)">◐ ${nb(counts.photo)} — ${L.photo[lang]}</span>
+   <span class="pill" style="background:var(--miss-soft);border-color:var(--miss)">☐ ${nb(counts.miss)} — ${L.miss[lang]}</span>
+   <button class="btn" onclick="resetTrk()">${L.reset[lang]}</button>
+  </div>`;
+ TRK.forEach(t=>{
+  if(t.g){html+=`<div class="tgroup">${t.g[lang]}</div>`;return;}
+  const st=trkState[t.id]||t.d;
+  const pri=t.p==='—'?'—':L[t.p][lang];
+  html+=`<div class="trow">
+    <button class="st ${st}" aria-label="${L.status[lang]}" onclick="cycTrk('${t.id}')">${SYM[st]}</button>
+    <div class="nm">${q(lang==='bn'?t.bn:t.en)}<span class="w">${q(t.w[lang])}</span></div>
+    <div class="pri">${L.pri[lang]}: ${pri}</div></div>`;
+ });
+ $('pane-trk').innerHTML=html;
+}
+window.cycTrk=async id=>{
+ const item=TRK.find(t=>t.id===id); const cur=trkState[id]||item.d;
+ trkState[id]=CYCLE[(CYCLE.indexOf(cur)+1)%3];
+ tracker(); saveTrk();
+};
+window.resetTrk=()=>{ if(confirm(lang==='bn'?'সব অবস্থা পূর্বনির্ধারিত মানে ফিরিবে?':'Reset all statuses to the defaults?')){trkState={};tracker();saveTrk();} };
+async function saveTrk(){ if(!storageOK)return; try{ await window.storage.set('akram-estate-tracker-v1', JSON.stringify(trkState)); }catch(e){} }
+async function loadTrk(){ if(!(window.storage&&window.storage.get)){storageOK=false;return;} storageOK=true;
+ try{ const r=await window.storage.get('akram-estate-tracker-v1'); if(r&&r.value)trkState=JSON.parse(r.value)||{}; }catch(e){ trkState={}; } }
+/* ---------- tabs & lang ---------- */
+const TABIDS=['pane-overview','pane-sham','pane-jal','pane-baruna','pane-rec','pane-trk'];
+let tab=0;
+function drawTabs(){ $('tabbar').innerHTML=L.tabs[lang].map((t,i)=>`<button class="${i===tab?'on':''}" onclick="setTab(${i})">${t}</button>`).join(''); 
+ TABIDS.forEach((id,i)=>$(id).classList.toggle('on',i===tab)); }
+window.setTab=i=>{tab=i;render();window.scrollTo({top:0});};
+window.setLang=l=>{lang=l;document.documentElement.lang=l;render();};
+function render(){
+ $('lang-en').classList.toggle('on',lang==='en'); $('lang-bn').classList.toggle('on',lang==='bn');
+ document.querySelectorAll('[data-l]').forEach(el=>{el.innerHTML=q(L[el.dataset.l][lang]);});
+ drawTabs(); overview();
+ mouzaPane('pane-sham',SHAM,'sham',
+  {t:{en:'Mouza Shamerkona — J.L. 102, Moulvibazar Sadar',bn:'মৌজা শামেরকোনা — জে.এল. ১০২, মৌলভীবাজার সদর'},
+   p:{en:'Three plots from R.S. Khatiyan 22, half mutated to the heirs in 2024 (Mutation 1224, DCR paid 30/03/2024). The other half is with Late Nurul Islam’s line.',
+      bn:'আর.এস. খতিয়ান ২২-এর তিনটি দাগ; ২০২৪-এ অর্ধেক ওয়ারিশগণের নামে নামজারি (নামজারি ১২২৪, ডিসিআর ৩০/০৩/২০২৪)। বাকি অর্ধেক প্রয়াত নুরুল ইসলামের পক্ষে।'}},
+  {en:'25.50 shatak = 0.255 acre (in words on the record: zero acre, twenty-five shatak fifty).',bn:'২৫.৫০ শতক = ০.২৫৫ একর (রেকর্ডে কথায়: শূন্য একর পঁচিশ শতক পঞ্চাশ)।'});
+ mouzaPane('pane-jal',JAL,'jal',
+  {t:{en:'Mouza Jalalpur — J.L. 119, Rajnagar',bn:'মৌজা জালালপুর — জে.এল. ১১৯, রাজনগর'},
+   p:{en:'Twenty-three plot entries under Mutation Khatiyan 1157 (2024), drawn from source khatiyans 16, 14, 18, 17 and 15 — plus Khatiyan 26, already in the brothers’ names. Every figure reconciles: page-1 subtotal 4-87.20, grand total 5-81.20.',
+      bn:'নামজারি খতিয়ান ১১৫৭ (২০২৪)-এর ২৩টি দাগ-এন্ট্রি — আগত খতিয়ান ১৬, ১৪, ১৮, ১৭ ও ১৫ হইতে — সহ খতিয়ান ২৬, যাহা আগেই ভাইদের নামে। প্রতিটি অঙ্ক মিলে: ১ম পৃষ্ঠার উপ-মোট ৪-৮৭.২০, সর্বমোট ৫-৮১.২০।'}},
+  {en:'581.20 shatak = 5.812 acres (in words on the record: five point eight one two acres only) — plus 21.51 Sh in Khatiyan 26.',
+   bn:'৫৮১.২০ শতক = ৫.৮১২ একর (রেকর্ডে কথায়: পাঁচ দশমিক আট এক দুই একর মাত্র) — সহ খতিয়ান ২৬-এ ২১.৫১ শঃ।'});
+ baruna(); recs(); tracker();
+}
+(async()=>{ await loadTrk(); render(); })();
+</script>
+</body>
+</html>
